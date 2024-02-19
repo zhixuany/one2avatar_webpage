@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="One2Avatar: Generative Implicit Head Avatar For Few-shot User Adaptation">
+  <meta name="keywords" content="One2Avatar">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="One2Avatar: Generative Implicit Head Avatar For Few-shot User Adaptation" />
+  <meta property="og:description" content="One2Avatar generate an animatable photo-realistic avatar from only a few or even one image of the target person." />
+  <meta property="og:image" content="./resource/static/images/teaser.png" />
+  <title>One2Avatar: Generative Implicit Head Avatar For Few-shot User Adaptation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./resource/static/css/bulma.min.css">
+  <link rel="stylesheet" href="./resource/static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./resource/static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./resource/static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./resource/static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./resource/static/js/fontawesome.all.min.js"></script>
+  <script src="./resource/static/js/bulma-carousel.min.js"></script>
+  <script src="./resource/static/js/bulma-slider.min.js"></script>
+  <script src="./resource/static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">One2Avatar: Generative Implicit Head Avatar For Few-shot User Adaptation</h1>
+          <h1 class="title is-size-3" style="color:#5a6268;">Under Review</h1>
+          <div class="is-size-5 publication-authors" style="text-align: center; font-size: 25px; padding-top: 10px;">
+            <span class="author-block">
+              <a href="https://sites.google.com/umn.edu/zhixuany/home">Zhixuan Yu</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://zqbai-jeremy.github.io/">Ziqian Bai</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.meka.page/">Abhimitra Meka</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=en&user=qsrpuKIAAAAJ">Feitong Tan</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://xharlie.github.io">Qiangeng Xu</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=lJ3VfV8AAAAJ&hl=en">Rohit Pandey</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.seanfanello.it/">Sean Fanello</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www-users.cse.umn.edu/~hspark/">Hyun Soo Park</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.zhangyinda.com/">Yinda Zhang</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors" style="text-align: center;">
+            <span class="author-block"><sup>1</sup> Google</span>,
+            <span class="author-block"><sup>2</sup> University of Minnesota</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="TODO-arxiv-link"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>ArXiv</span>
+                </a>
+              </span>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+<!--  <div class="container is-max-desktop">-->
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <img id="teaser" class="img-responsive img-rounded" src="./resource/static/images/teaser_v3.png" style="width:100%" alt="">
+      <h2 class="subtitle has-text-justified">
+        We present a new approach to generate an animatable photo-realistic avatar from only a few or even one image of the target
+        person. We encode the geometry and appearance by leveraging a neural radiance field that is generated by a 3D generative model learned
+        from multi-view multi-expression data. With this model, we render the high fidelity head avatar seen from a novel view.
+      </h2>
+    </div>
+  </div>
+
+  <div class="container" style="margin-bottom: -100px; font-size: 20px;">
+    <b>One-shot Avatar Creation</b>
+  </div>
+  <div class="container">
+    <div class="columns is-centered has-text-centered" style="padding-top: 100px;">
+      <div class="column" style="margin-right: -300px; margin-top: 30px;">
+        <div class="column content">
+            <img src="./resource/static/images/subject4_train_frames_oneshot.png" style="width:40%" alt="">
+          <div class="container" style="margin-top: -10px; font-size: 20px;">
+            Training data &emsp;&emsp;&emsp;
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="column content">
+          <video controls
+                 autoplay
+                 muted
+                 style="width:90%"
+                 loop>
+            <source src="./resource/clips/oneshot-subject4.mp4"
+                    type="video/mp4">
+          </video>
+          <div class="container" style="margin-top: 1px; font-size: 20px;">
+            Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-bottom: -100px; padding-top: 50px; font-size: 20px;">
+    <b>Five-shot Avatar Creation</b>
+  </div>
+  <div class="container">
+    <div class="columns is-centered has-text-centered" style="padding-top: 100px;">
+      <div class="column" style="margin-right: -180px; margin-top: 1px;">
+        <div class="column content">
+          <img src="./resource/static/images/subject4_train_frames_shot5_v2.png" style="width:70%" alt="">
+          <div class="container" style="margin-top: -10px; font-size: 20px;">
+            Training data &emsp;&emsp;&emsp;
+          </div>
+        </div>
+      </div>
+
+      <div class="column" style="margin-top: 60px;">
+        <div class="column content">
+          <video controls
+                 autoplay
+                 muted
+                 style="width:90%"
+                 loop>
+            <source src="./resource/clips/shot5-subject4.mp4"
+                    type="video/mp4">
+          </video>
+          <div class="container" style="margin-top: 1px; font-size: 20px;">
+            Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Traditional methods for constructing high-quality, personalized head avatars from monocular videos demand extensive
+            face captures and training time, posing a signiﬁcant challenge for scalability. This paper introduces a novel approach
+            to create high quality head avatar utilizing only a single or a few images per user. We learn a generative model for
+            3D animatable photo-realistic head avatar from a multi-view dataset of expressions from 2407 subjects, and leverage
+            it as a prior for creating personalized avatar from few-shot images. Different from previous 3D-aware face generative
+            models, our prior is built with a 3DMManchored neural radiance ﬁeld backbone, which we show to be more effective for
+            avatar creation through auto-decoding based on few-shot inputs. We also handle unstable 3DMM ﬁtting by jointly optimizing
+            the 3DMM ﬁtting and camera calibration that leads to better few-shot adaptation. Our method demonstrates compelling
+            results and outperforms existing state-of-the-art methods for few-shot avatar adaptation, paving the way for more efﬁcient
+            and personalized avatar creation.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div id="overview" class="hero-body">
+      <div class="columns is-centered has-text-centered"><h2 class="title is-3">Overview</h2></div>
+      <img class="img-responsive img-rounded" src="./resource/static/images/network_v3.png" style="width:100%" alt="">
+      <h2 class="content has-text-justified">
+        We adopt a 3DMM-anchored neural radiance ﬁeld (NeRF) as our avatar representation, where the feature for each query point is
+        aggregated from its k-Nearest-Neighbors in the 3DMM vertices and decoded to color and density via a shallow MLP network.
+        The StyleGAN2 generator based identity branch encodes personalized characteristics into an identity feature map from a latent
+        code uniquely assigned to a training subject. The expression branch produces an expression feature map from 3DMM expression code
+        via a U-Net. The summation of two feature maps are then sampled by 3DMM vertices via texture coordinates to establish the
+        3DMM-anchored neural radiance ﬁeld. For few-shot adaptation, we initialize the target latent code with the mean latent code
+        across training subjects and jointly optimize it with the model weights as well as per-frame 3DMM ﬁtting corrections on given
+        images of the target person.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="margin-top: -100px;">
+  <div class="container is-four-fifths">
+    <!--/ Results. -->
+    <div id="results" class="hero-body">
+      <!-- <div class="columns is-centered has-text-centered"><h2 class="title is-3">Results</h2></div> -->
+
+      <div class="container" style="text-align: center;">
+        <hr>
+        <br>
+        <h3 class="title is-3 has-text-centered">Results of Five-shot Avatar Creation</h3>
+        <br>
+
+
+<!--        =============================================================================-->
+<!--        Five-shot, subject0-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: -100px;">
+            <div class="column" style="margin-right: -180px; margin-top: 1px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_shot5/train_frames_shot5_subject0.png" style="width:60%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 1px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:90%"
+                       loop>
+                  <source src="./resource/clips/shot5-subject0.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--        Five-shot, subject1-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -150px; margin-top: 1px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_shot5/train_frames_shot5_subject1.png" style="width:60%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:100%"
+                       loop>
+                  <source src="./resource/clips/shot5-subject1.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--        Five-shot, subject3-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -150px; margin-top: 1px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_shot5/train_frames_shot5_subject3.png" style="width:60%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 65px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:100%"
+                       loop>
+                  <source src="./resource/clips/shot5-subject3.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!--        Five-shot, subject7-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -180px; margin-top: 1px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_shot5/train_frames_shot5_subject7.png" style="width:60%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 20px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/shot5-subject7.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!--        Five-shot, subject8-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -180px; margin-top: 1px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_shot5/train_frames_shot5_subject8.png" style="width:60%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 5px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:90%"
+                       loop>
+                  <source src="./resource/clips/shot5-subject8.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--        ------------------------------------------------------------------------------->
+        <hr>
+        <br>
+        <h3 class="title is-3 has-text-centered">Results of One-shot Avatar Creation</h3>
+        <br>
+        <!--        One-shot, subject0-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: -100px;">
+            <div class="column" style="margin-right: -300px; margin-top: 30px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_oneshot/train_frames_oneshot_subject0.png" style="width:40%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: -5px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:90%"
+                       loop>
+                  <source src="./resource/clips/oneshot-subject0.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        One-shot, subject1-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -250px; margin-top: 30px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_oneshot/train_frames_oneshot_subject1.png" style="width:45%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 13px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:100%"
+                       loop>
+                  <source src="./resource/clips/oneshot-subject1.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        One-shot, subject3-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -250px; margin-top: 30px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_oneshot/train_frames_oneshot_subject3.png" style="width:45%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 38px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:100%"
+                       loop>
+                  <source src="./resource/clips/oneshot-subject3.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--        One-shot, subject7-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -350px; margin-top: 30px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_oneshot/train_frames_oneshot_subject7.png" style="width:40%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 28px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:75%"
+                       loop>
+                  <source src="./resource/clips/oneshot-subject7.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--        One-shot, subject8-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 10px;">
+            <div class="column" style="margin-right: -300px; margin-top: 30px;">
+              <div class="column content">
+                <img src="./resource/static/images/train_frames_oneshot/train_frames_oneshot_subject8.png" style="width:40%" alt="">
+                <div class="container" style="margin-top: -10px; font-size: 20px;">
+                  Training data &emsp;&emsp;&emsp;
+                </div>
+              </div>
+            </div>
+
+            <div class="column" style="margin-top: 15px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:90%"
+                       loop>
+                  <source src="./resource/clips/oneshot-subject8.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: 1px; font-size: 20px;">
+                  Input Driving Video &emsp;&emsp;&emsp;Rendered Avatar &emsp;&emsp;&emsp;Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--        ------------------------------------------------------------------------------->
+        <hr>
+        <br>
+        <h3 class="title is-3 has-text-centered">Qualitative Comparison</h3>
+<!--        <p style="font-size: 20px; text-align:center">Labels &emsp;- &emsp;Left: Input Driving Video,  &emsp;Center: Rendered Avatar,  &emsp;Right: Rendered Depth</p>-->
+        <p style="font-size: 20px; text-align:center">
+          Labels &emsp;- &emsp;From left to right: &emsp;(1) Next3D [1], &emsp;(2) MonoAvatar [2],
+          &emsp;(3) Ours, &emsp;(4) Ground Truth (Input Driving Video)
+        </p>
+        <p style="font-size: 20px; text-align:center">
+          (Since Next3D is trained with cropped facial images, we apply the same cropping for all methods here for a fair comparison.
+          Note that the "jitters" in the videos below is caused by inconsistent cropping bounding boxes generated during data
+          processing of Next3D, which are compared based on five estimated facial landmarks.)
+        </p>
+        <p style="font-size: 20px; text-align:left; padding-top: 30px;">
+          Comparison on <b>Five-shot</b> avatar creation:
+        </p>
+        <br>
+        <!--        Compare Five-shot, subject0-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: -100px;">
+            <div class="column" style="margin-top: 1px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-shot5-subject0.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare Five-shot, subject1-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-shot5-subject1.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare Five-shot, subject3-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-shot5-subject3.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare Five-shot, subject4-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-shot5-subject4.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare Five-shot, subject7-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-shot5-subject7.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare Five-shot, subject8-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-shot5-subject8.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--        ------------------------------------------------------------------------------->
+        <hr>
+        <br>
+        <p style="font-size: 20px; text-align:left; padding-top: 30px;">
+          Comparison on <b>One-shot</b> avatar creation:
+        </p>
+        <br>
+        <!--        Compare One-shot, subject0-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: -100px;">
+            <div class="column" style="margin-top: -5px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-oneshot-subject0.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare One-shot, subject1-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-oneshot-subject1.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare One-shot, subject3-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-oneshot-subject3.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare One-shot, subject4-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-oneshot-subject4.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare One-shot, subject7-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-oneshot-subject7.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Compare One-shot, subject8-->
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:80%"
+                       loop>
+                  <source src="./resource/clips/comp-oneshot-subject8.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Next3D &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; MonoAvatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Ours &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Ground Truth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        ------------------------------------------------------------------------------->
+        <hr>
+        <br>
+        <h3 class="title is-3 has-text-centered">Avatar Generation</h3>
+        <p style="font-size: 20px; text-align:left; padding-top: 30px;">
+          Avatar generation in novel identity by interpolating latent code of two subjects.
+        </p>
+        <br>
+
+
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-right: 0px; margin-top: 0px;">
+              <div class="column content">
+                <img src="./resource/static/images/interp.png" style="width:80%" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="columns is-centered has-text-centered" style="padding-top: 1px;">
+            <div class="column" style="margin-top: -40px;">
+              <div class="column content">
+                <video controls
+                       autoplay
+                       muted
+                       style="width:85%"
+                       loop>
+                  <source src="./resource/clips/interp.mp4"
+                          type="video/mp4">
+                </video>
+                <div class="container" style="margin-top: -5px; font-size: 20px;">
+                  &emsp; Driving Video &emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Generated Avatar &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp; Rendered Depth
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+
+        <!--        ------------------------------------------------------------------------------->
+        <h3 class="title is-3 has-text-centered">References</h3>
+        <p style="font-size: 18px; text-align:left; padding-top: 0px;">
+          [1] Jingxiang Sun, Xuan Wang, Lizhen Wang, Xiaoyu Li, Yong Zhang, Hongwen Zhang, and Yebin Liu. "Next3d: Generative neural texture rasterization for 3d-aware head avatars." In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2023.
+        </p>
+        <p style="font-size: 18px; text-align:left; padding-top: 0px;">
+          [2] Ziqian Bai, Feitong Tan, Zeng Huang, Kripasindhu Sarkar, Danhang Tang, Di Qiu, Abhimitra Meka et al. "Learning Personalized High Quality Volumetric Head Avatars from Monocular RGB Videos." In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2023.
+        </p>
+        <hr>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website borrows the template from <a
+              href="https://augmentedperception.github.io/monoavatar/">MonoAvatar</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
